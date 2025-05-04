@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lux Гостиница</title>
+  <link rel="stylesheet" href="../Styles/page1.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">Golden <span>Гостиница</span></div>
+      <nav class="nav">
+        <a href="../Page/main.html">главная</a>
+        <a href="tel:+77055686627">+77055686627</a>
+        <a href="#">🔍</a>
+        <a href="../Page/main.html">☰</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Виртуальный тур по нашему отелю</h1>
+    <div class="tour-container">
+      <img id="viewer" src="/image2/scene1.jpg.png" alt="Панорама отеля">
+      <button id="btn-up" class="arrow-btn" onclick="goBack()">⬆</button>
+      <button id="btn-down" class="arrow-btn" onclick="goForward()">⬇</button>
+    </div>
+
+    <section class="features">
+      <div class="feature">
+        <h3>Современные номера</h3>
+        <p>Элегантные и комфортабельные номера с видом на город и море.</p>
+      </div>
+      <div class="feature">
+        <h3>Ресторан & Бар</h3>
+        <p>Вкусные блюда и освежающие напитки в атмосфере уюта.</p>
+      </div>
+      <div class="feature">
+        <h3>Фитнес и СПА</h3>
+        <p>Отдохните и восстановите силы в нашем wellness-центре.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <h3>Быстрые ссылки</h3>
+        <hr>
+        <div class="footer-columns">
+          <ul>
+            <li><a href="#">Наши номера</a></li>
+            <li><a href="#">Одноместный</a></li>
+            <li><a href="#">Двухместный</a></li>
+            <li><a href="#">Семейный</a></li>
+            <li><a href="#">Люкс</a></li>
+          </ul>
+          <ul>
+            <li><a href="#">Новости</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="../Page/page2.html">Вход</a></li>
+            <li><a href="../Page/page2.html">Регистрация</a></li>
+            <li><a href="#">Карьера</a></li>
+          </ul>
+          <ul>
+            <li><a href="#">Контакты</a></li>
+            <li><a href="#">Галерея</a></li>
+            <li><a href="#">Отзывы</a></li>
+            <li><a href="#">Наша история</a></li>
+            <li><a href="../Page/main.html">Бронирование</a></li>
+          </ul>
+          <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="https://www.instagram.com/zharovrusla?igsh=MTJsb3czaW55ZGJqNQ%3D%3D&utm_source=qr">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h3>Контактная информация</h3>
+        <hr>
+        <p><i class="fa fa-map-marker"></i> 2130 Fulton Street, Сан-Диего, Калифорния, 94117-1080, США</p>
+        <p><i class="fa fa-phone"></i> +77055686627<br>+77055686627</p>
+        <p><i class="fa fa-envelope"></i> rzarov8@gmail.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Все права защищены. <a href="#">Условия использования</a> и <a href="#">Политика конфиденциальности</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const scenes = [
+      "../image2/scene1.jpg.png",
+      "../image2/scene2.jpg.png",
+      "../image2/scene3.jpg.png",
+      "../image2/scene4.jpg.png",
+      "../image2/scene5.jpg.png",
+      "../image2/scene6.jpg.png",
+      "../image2/scene7.jpg.png",
+      "../image2/scene8.jpg.png",
+      "../image2/scene9.jpg.png",
+      "../image2/scene10.jpg.png",
+    ];
+    let index = 0;
+    const viewer = document.getElementById("viewer");
+
+    function updateScene() {
+      viewer.style.opacity = 0;
+      setTimeout(() => {
+        viewer.src = scenes[index];
+        viewer.style.opacity = 1;
+      }, 300);
+    }
+
+    function goForward() {
+      index = (index + 1) % scenes.length;
+      updateScene();
+    }
+
+    function goBack() {
+      index = (index - 1 + scenes.length) % scenes.length;
+      updateScene();
+    }
+  </script>
+
+</body>
+</html>

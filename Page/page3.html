@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Профиль</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <div class="profile-card">
+    <img src="https://via.placeholder.com/100x100.png?text=👤" alt="Аватар">
+    <h2 id="username">Пользователь</h2>
+    <button onclick="goBack()">Назад</button>
+    <button onclick="logout()">Выйти</button>
+  </div>
+
+  <script>
+    const user = localStorage.getItem("currentUser");
+
+    if (!user) {
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("username").innerText = user;
+    }
+
+    function goBack() {
+      window.location.href = "main.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

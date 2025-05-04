@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Авторизация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel ="stylesheet" href="../Styles/page2.css">
+</head>
+<body>
+
+  <div class="auth-container">
+    <h2 id="form-title">Вход</h2>
+
+    <div class="input-group">
+      <label for="username">Логин</label>
+      <input type="text" id="username" placeholder="Введите логин">
+    </div>
+
+    <div class="input-group">
+      <label for="password">Пароль</label>
+      <input type="password" id="password" placeholder="Введите пароль">
+    </div>
+
+    <div class="input-group" id="repeat-password-group" style="display: none;">
+      <label for="repeat-password">Повторите пароль</label>
+      <input type="password" id="repeat-password" placeholder="Ещё раз пароль">
+    </div>
+
+    <div class="checkbox-group" id="remember-group">
+      <input type="checkbox" id="remember">
+      <label for="remember">Запомнить меня</label>
+    </div>
+
+    <button onclick="handleSubmit()">Продолжить</button>
+
+    <div class="toggle-link" onclick="toggleMode()">Нет аккаунта? Зарегистрироваться</div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let isLoginMode = true;
+
+    window.onload = function () {
+      const savedUsername = localStorage.getItem("savedUsername");
+      const savedPassword = localStorage.getItem("savedPassword");
+
+      if (savedUsername && savedPassword) {
+        document.getElementById("username").value = savedUsername;
+        document.getElementById("password").value = savedPassword;
+        document.getElementById("remember").checked = true;
+      }
+    };
+
+    function toggleMode() {
+      isLoginMode = !isLoginMode;
+      document.getElementById("form-title").innerText = isLoginMode ? "Вход" : "Регистрация";
+      document.querySelector("button").innerText = isLoginMode ? "Войти" : "Зарегистрироваться";
+      document.getElementById("repeat-password-group").style.display = isLoginMode ? "none" : "block";
+      document.getElementById("remember-group").style.display = isLoginMode ? "flex" : "none";
+      document.querySelector(".toggle-link").innerText = isLoginMode
+        ? "Нет аккаунта? Зарегистрироваться"
+        : "Уже есть аккаунт? Войти";
+      document.getElementById("message").style.display = "none";
+    }
+
+    function handleSubmit() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const repeatPassword = document.getElementById("repeat-password").value.trim();
+      const remember = document.getElementById("remember").checked;
+      const message = document.getElementById("message");
+
+      if (!username || !password || (!isLoginMode && password !== repeatPassword)) {
+        message.innerText = isLoginMode
+          ? "Введите логин и пароль"
+          : "Пароли не совпадают или поля пустые";
+        message.style.color = "red";
+        message.style.display = "block";
+        return;
+      }
+
+      if (isLoginMode) {
+        const stored = JSON.parse(localStorage.getItem("user_" + username));
+        if (stored && stored.password === password) {
+          if (remember) {
+            localStorage.setItem("savedUsername", username);
+            localStorage.setItem("savedPassword", password);
+          } else {
+            localStorage.removeItem("savedUsername");
+            localStorage.removeItem("savedPassword");
+          }
+
+            message.innerText = "Успешный вход! Перенаправляем...";
+            message.style.color = "green";
+            message.style.display = "block";
+
+            setTimeout(() => {
+                window.location.href = "../Page/main.html";
+            }, 2000);
+
+;
+        } else {
+          message.innerText = "Неверный логин или пароль";
+          message.style.color = "red";
+        }
+      } else {
+        localStorage.setItem("user_" + username, JSON.stringify({ password }));
+        message.innerText = "Регистрация успешна!";
+        message.style.color = "green";
+      }
+
+      message.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
